@@ -1,0 +1,48 @@
+{
+  "name": "dom-form-serializer",
+  "version": "1.0.0",
+  "description": "Serialize form inputs",
+  "main": "index.js",
+  "main": "dist/dom-form-serializer.js",
+  "module": "dist/dom-form-serializer.mjs",
+  "jsnext:main": "dist/dom-form-serializer.mjs",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "./node_modules/.bin/standard",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "pretest": "npm run build",
+    "test": "NODE_PATH=$NODE_PATH:$PWD/lib mocha --compilers js:babel-register test/*.js",
+    "prepublish": "npm test"
+  },
+  "author": "Jeferson Daniel",
+  "license": "MIT",
+  "keywords": [
+    "form",
+    "serialize",
+    "client",
+    "browser"
+  ],
+  "devDependencies": {
+    "babel-register": "^6.14.0",
+    "babel-plugin-external-helpers": "^6.8.0",
+    "chai": "^3.5.0",
+    "domify": "^1.4.0",
+    "jsdom": "9.4.2",
+    "jsdom-global": "2.1.0",
+    "mocha": "^3.0.2",
+    "standard": "^8.0.0",
+    "istanbul": "^0.4.4",
+    "babelrc-rollup": "^3.0.0",
+    "rollup": "^0.34.7",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-istanbul": "^1.0.0",
+    "rollup-watch": "^2.5.0"
+  },
+  "dependencies": {
+    "matches-selector": "^1.0.0"
+  }
+}

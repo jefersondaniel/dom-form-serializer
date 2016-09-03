@@ -1,0 +1,169 @@
+# DOM Form Serializer
+
+Serialize forms fields into a JSON representation.
+
+## About
+
+This project is a fork of [Backbone.Syphon](https://github.com/marionettejs/backbone.syphon) that has no dependency on backbone and jquery. It aims to make it easy to serialize the fields of a form into a simple JSON object.
+
+### Installing
+
+```
+npm install dom-form-serializer
+```
+
+## Basic Usage
+
+### Serialize
+
+```js
+var serialize = require('dom-form-serializer').serialize
+serialize(document.querySelector('#form'))
+```
+
+### Keys Retrieved By "name" Attribute
+
+The default behavior for serializing fields is to use the field's "name" attribute as the key in the serialized object.
+
+```html
+<form id="form">
+  <input name="a">
+  <select name="b"></select>
+  <textarea name="c"></textarea>
+</form>
+```
+
+```js
+serialize(document.querySelector('#form'))
+
+// will produce =>
+
+{
+  a: "",
+  b: "",
+  c: ""
+}
+```
+
+### Checkboxes
+
+By default, a checkbox will return a boolean value signifying whether or not it is checked.
+
+```html
+<form id="form">
+  <input type="checkbox" name="a">
+  <input type="checkbox" name="b" checked>
+  <input type="checkbox" name="c" indeterminate>
+</form>
+```
+
+```js
+serialize(document.querySelector('#form'));
+
+// will produce =>
+
+{
+  a: false,
+  b: true,
+  c: null
+}
+```
+
+### Radio Button Groups
+
+Radio button groups (grouped by the input element "name" attribute) will produce a single value, from the selected
+radio button.
+
+```html
+<form id="form">
+  <input type="radio" name="a" value="1">
+  <input type="radio" name="a" value="2" checked>
+  <input type="radio" name="a" value="3">
+  <input type="radio" name="a" value="4">
+</form>
+```
+
+```js
+serialize(document.querySelector('#form'))
+
+// will produce =>
+
+{
+  a: "2"
+}
+```
+
+This behavior can be changed by registering a different set of Key Extractors, Input Readers, and Key Assignment
+Validators. See the tests
+[serialize.spec.js](https://github.com/jefersondaniel/dom-form-serializer/blob/master/test/serialize.spec.js) for more examples on these.
+
+## Basic Usage: Deserialize
+
+You can also deserialize an object's values back into their field equivalent. It uses the same conventions and configuration as the serialization process, with the introduction of Input Writers to handle populating the fields with the values
+
+```html
+<form id="form">
+  <input type="text" name="a">
+  <input type="text" name="b">
+</form>
+```
+
+```js
+var data = {
+  a: "foo",
+  b: "bar"
+};
+
+deserialize(document.querySelector('#form'), data);
+```
+
+This will populate the form field elements with the correct values from the `data` parameter.
+
+## Ignored Input Types
+
+The following types of input are ignored, and not included in the resulting JavaScript object:
+
+* `<input type="submit">` buttons
+* `<input type="reset"`> buttons
+* standard `<button>` tags
+
+If you need to get a value from the specific button that was clicked, you can either include it specifically (see below) or use a DOM event to listen for that element being manipulated (clicked, for example) and manually grab
+the data you need.
+
+### Ignoring Other Input Types
+
+You can define ignored selectors using the ignoredTypes option.
+
+```js
+// ignore all <textarea> input elements
+serialize(element, {ignoredTypes: ['textarea']})
+```
+
+## Serializing Nested Attributes And Field Names
+
+`serialize` will parse nested attribute names and create a nested result object, using the Rails standard of `name="foo[bar][baz]"` by default.
+
+```html
+<form>
+  <input type="text" name="foo[bar]" value="a value">
+  <input type="text" name="foo[baz][quux]" value="another value">
+</form>
+```
+
+will produce
+
+```js
+{
+  foo: {
+    bar: "a value",
+    baz: {
+      quux: "another value"
+    }
+  }
+}
+```
+
+## Acknowledgments
+
+[Backbone.Syphon](https://github.com/marionettejs/backbone.syphon)
+
