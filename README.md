@@ -1,5 +1,8 @@
 # DOM Form Serializer
 
+[![Build Status](https://secure.travis-ci.org/jefersondaniel/dom-form-serializer.png?branch=master)](http://travis-ci.org/jefersondaniel/dom-form-serializer)
+[![npm version](https://badge.fury.io/js/dom-form-serializer.svg)](https://badge.fury.io/js/dom-form-serializer)
+
 Serialize forms fields into a JSON representation.
 
 ## About
