@@ -28,6 +28,7 @@
   ],
   "devDependencies": {
     "babel-register": "^6.14.0",
+    "babel-preset-es2015": "^6.13.2",
     "babel-plugin-external-helpers": "^6.8.0",
     "chai": "^3.5.0",
     "domify": "^1.4.0",
