@@ -1,7 +1,7 @@
 /* global beforeEach, describe, it */
 import 'jsdom-global/register'
 import {expect} from 'chai'
-import serialize from 'serialize'
+import serialize from '../lib/serialize'
 import domify from 'domify'
 
 describe('override the list of fields to include or ignore', () => {

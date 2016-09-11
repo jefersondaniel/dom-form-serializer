@@ -1,7 +1,7 @@
 /* global beforeEach, describe, it */
 import 'jsdom-global/register'
 import {expect} from 'chai'
-import deserialize from 'deserialize'
+import deserialize from '../lib/deserialize'
 import domify from 'domify'
 
 describe('deserializing nested key names', () => {
