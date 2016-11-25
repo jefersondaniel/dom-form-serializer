@@ -76,6 +76,31 @@ describe('deserializing an object into a form', () => {
     })
   })
 
+  describe('when deserializing into a multiple select box', function () {
+    let result
+
+    beforeEach(function () {
+      let form = domify(
+        '<form>' +
+        '<select name="foo" multiple>' +
+        '<option value="baz">baz</option>' +
+        '<option value="bar">bar</option>' +
+        '<option value="bor">bor</option>' +
+        '</select>' +
+        '</form>'
+      )
+      deserialize(form, {foo: ['bar', 'bor']})
+      result = Array.prototype.map.call(
+        form.querySelectorAll('[selected]'),
+        function (el) { return el.value }
+      )
+    })
+
+    it('should select the options corresponding to the value in the given array', () => {
+      expect(result).to.deep.equal(['bar', 'bor'])
+    })
+  })
+
   describe('when deserializing into a checkbox', () => {
     let makeForm
 

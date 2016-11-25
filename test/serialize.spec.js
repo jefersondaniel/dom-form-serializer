@@ -79,6 +79,26 @@ describe('serialize', () => {
     })
   })
 
+  describe('when serializing a multiple select box', () => {
+    let result
+
+    beforeEach(() => {
+      let form = domify(
+        '<form>' +
+        '<select name="foo" multiple>' +
+        '<option value="foo">foo</option>' +
+        '<option value="bar" selected>bar</option>' +
+        '</select>' +
+        '</form>'
+      )
+      result = serialize(form)
+    })
+
+    it('should have the options\'s value as array', function () {
+      expect(result.foo).to.deep.equal(['bar'])
+    })
+  })
+
   describe('when serializing a checkbox', () => {
     let form
 
