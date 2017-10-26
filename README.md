@@ -100,6 +100,54 @@ This behavior can be changed by registering a different set of Key Extractors, I
 Validators. See the tests
 [serialize.spec.js](https://github.com/jefersondaniel/dom-form-serializer/blob/master/test/serialize.spec.js) for more examples on these.
 
+### Drop Down Lists
+
+Serializing drop down lists (`<select>`) will result in value of the selected option.
+
+
+```html
+<form id="form">
+  <select name="foo">
+    <option value="bar"></option>
+  </select>
+</form>
+```
+
+
+```js
+serialize(document.querySelector('#form'))
+
+// will produce =>
+
+{
+  foo: "bar"    
+}
+```
+
+### Multiple Select Boxes
+
+Serializing multiple select boxes (`<select multiple>`) will yield the selected options as an array.
+
+```html
+<form id="form">
+  <select name="foo" multiple>
+    <option value="foo"></option>
+    <option value="bar" selected></option>
+    <option value="baz" selected></option>
+  </select>
+</form>
+```
+
+```js
+serialize(document.querySelector('#form'))
+
+// will produce =>
+
+{
+  foo: ["bar", "baz"]    
+}
+```
+
 ## Basic Usage: Deserialize
 
 You can also deserialize an object's values back into their field equivalent. It uses the same conventions and configuration as the serialization process, with the introduction of Input Writers to handle populating the fields with the values
@@ -166,7 +214,57 @@ will produce
 }
 ```
 
-## Acknowledgments
+### Array Inputs
+
+`serialize` will parse multiple inputs named after the convention `name="foo[bar][]"` into elements of the array `bar`.
+
+```html
+<form>
+  <input type="checkbox" name="foo[bar][]" value="baz" checked="checked">
+  <input type="checkbox" name="foo[bar][]" value="qux" checked="checked">
+</form>
+```
+
+will produce
+
+```js
+{
+  foo: {
+    bar: ["baz", "qux"]
+  }
+}
+```
+
+### Custom splitters
+
+If your keys are split by something else than the Rails Array convention (for example `name="foo.bar.quux"`), you may pass this delimiter into `serialize` using the `keySplitter` option.
+
+```html
+<form id="form">
+  <input type="text" name="widget" value="wombat">
+  <input type="text" name="foo.bar" value="baz">
+  <input type="text" name="foo.baz.quux" value="qux">
+</form>
+```
+
+```js
+serialize(document.querySelector('#form'), { keySplitter: '.' })
+
+// will produce =>
+
+{
+  widget: "wombat",
+  foo: {
+    bar: "baz",
+    baz: {
+      quux: "qux"
+    }
+  }
+}
+
+```
+
+# Acknowledgments
 
 [Backbone.Syphon](https://github.com/marionettejs/backbone.syphon)
 
