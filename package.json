@@ -1,6 +1,6 @@
 {
   "name": "dom-form-serializer",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "Serialize form inputs",
   "main": "dist/dom-form-serializer.js",
   "module": "dist/dom-form-serializer.mjs",

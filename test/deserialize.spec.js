@@ -144,6 +144,27 @@ describe('deserializing an object into a form', () => {
     })
   })
 
+  describe('when deserializing an array input', () => {
+    let form
+
+    beforeEach(() => {
+      form = domify(
+        '<form>' +
+        '<input type="checkbox" name="foo[bar][]" value="baz">' +
+        '<input type="checkbox" name="foo[bar][]" value="qux">' +
+        '<input type="checkbox" name="foo[bar][]" value="biz">' +
+        '</form>'
+      )
+      deserialize(form, {foo: {bar: ['baz', 'biz']}})
+    })
+
+    it('should return result as array', () => {
+      expect(form.querySelector('[value=baz]').checked).to.be.true
+      expect(form.querySelector('[value=qux]').checked).to.be.false
+      expect(form.querySelector('[value=biz]').checked).to.be.true
+    })
+  })
+
   describe('when deserializing into a button', () => {
     let result, value
 

@@ -189,6 +189,25 @@ describe('serialize', () => {
     })
   })
 
+  describe('when serializing an array input', () => {
+    let result
+
+    beforeEach(() => {
+      let form = domify(
+        '<form>' +
+        '<input type="checkbox" name="foo[bar][]" value="baz" checked="checked">' +
+        '<input type="checkbox" name="foo[bar][]" value="biz">' +
+        '<input type="checkbox" name="foo[bar][]" value="qux" checked="checked">' +
+        '</form>'
+      )
+      result = serialize(form)
+    })
+
+    it('should return result as array', () => {
+      expect(result.foo.bar).to.deep.equal(['baz', 'qux'])
+    })
+  })
+
   describe('when ignoring a field by selector', () => {
     let result
 
