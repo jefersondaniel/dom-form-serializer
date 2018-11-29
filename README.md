@@ -249,7 +249,7 @@ If your keys are split by something else than the Rails Array convention (for ex
 ```
 
 ```js
-serialize(document.querySelector('#form'), { keySplitter: '.' })
+serialize(document.querySelector('#form'), { keySplitter: key => key.split('.') })
 
 // will produce =>
 
