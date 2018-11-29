@@ -179,7 +179,7 @@ The following types of input are ignored, and not included in the resulting Java
 * `<input type="reset"`> buttons
 * standard `<button>` tags
 
-If you need to get a value from the specific button that was clicked, you can either include it specifically (see below) or use a DOM event to listen for that element being manipulated (clicked, for example) and manually grab
+If you need to get a value from the specific button that was clicked, you can use a DOM event to listen for that element being manipulated (clicked, for example) and manually grab
 the data you need.
 
 ### Ignoring Other Input Types
