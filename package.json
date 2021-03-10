@@ -44,7 +44,6 @@
     "rollup-watch": "^2.5.0"
   },
   "dependencies": {
-    "matches-selector": "^1.0.0"
   },
   "standard": {
     "ignore": [
