@@ -24,9 +24,9 @@
     "client",
     "browser"
   ],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/jefersondaniel/dom-form-serializer.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jefersondaniel/dom-form-serializer.git"
   },
   "devDependencies": {
     "babel-register": "^6.14.0",
@@ -43,8 +43,7 @@
     "rollup-plugin-babel": "^2.6.1",
     "rollup-watch": "^2.5.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "standard": {
     "ignore": [
       "dist"
