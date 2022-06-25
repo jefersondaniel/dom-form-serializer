@@ -34,7 +34,7 @@
     "babel-plugin-external-helpers": "^6.8.0",
     "chai": "^3.5.0",
     "domify": "^1.4.0",
-    "jsdom": "9.4.2",
+    "jsdom": "16.5.0",
     "jsdom-global": "2.1.0",
     "mocha": "^3.0.2",
     "standard": "^8.0.0",
