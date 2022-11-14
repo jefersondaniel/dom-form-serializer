@@ -37,7 +37,7 @@
     "jsdom": "16.5.0",
     "jsdom-global": "2.1.0",
     "mocha": "^3.0.2",
-    "standard": "^8.0.0",
+    "standard": "^17.0.0",
     "babelrc-rollup": "^3.0.0",
     "rollup": "^0.34.7",
     "rollup-plugin-babel": "^2.6.1",
