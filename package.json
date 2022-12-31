@@ -40,7 +40,7 @@
     "standard": "^8.0.0",
     "babelrc-rollup": "^3.0.0",
     "rollup": "^0.34.7",
-    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-watch": "^2.5.0"
   },
   "dependencies": {},
