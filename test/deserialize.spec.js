@@ -1,6 +1,6 @@
 /* global beforeEach, describe, it */
-import 'jsdom-global/register'
-import {expect} from 'chai'
+import 'global-jsdom/register'
+import { expect } from 'chai'
 import deserialize from '../lib/deserialize'
 import domify from 'domify'
 
@@ -14,7 +14,7 @@ describe('deserializing an object into a form', () => {
 
     it('should not throw an exception', () => {
       expect(() => {
-        deserialize(form, {foo: 'bar'})
+        deserialize(form, { foo: 'bar' })
       }).to.not.throw(Error)
     })
   })
@@ -23,12 +23,12 @@ describe('deserializing an object into a form', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="text" name="foo">' +
         '</form>'
       )
-      deserialize(form, {foo: 'bar'})
+      deserialize(form, { foo: 'bar' })
       result = form.querySelector('[name=foo]').value
     })
 
@@ -41,12 +41,12 @@ describe('deserializing an object into a form', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<textarea name="foo"></textarea>' +
         '</form>'
       )
-      deserialize(form, {foo: 'bar'})
+      deserialize(form, { foo: 'bar' })
       result = form.querySelector('[name=foo]').value
     })
 
@@ -59,7 +59,7 @@ describe('deserializing an object into a form', () => {
     let result
 
     beforeEach(function () {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<select name="foo">' +
         '<option value="baz">baz</option>' +
@@ -67,7 +67,7 @@ describe('deserializing an object into a form', () => {
         '</select>' +
         '</form>'
       )
-      deserialize(form, {foo: 'bar'})
+      deserialize(form, { foo: 'bar' })
       result = form.querySelector('[name=foo]').value
     })
 
@@ -80,7 +80,7 @@ describe('deserializing an object into a form', () => {
     let result
 
     beforeEach(function () {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<select name="foo" multiple>' +
         '<option value="baz">baz</option>' +
@@ -89,7 +89,7 @@ describe('deserializing an object into a form', () => {
         '</select>' +
         '</form>'
       )
-      deserialize(form, {foo: ['bar', 'bor']})
+      deserialize(form, { foo: ['bar', 'bor'] })
       result = Array.prototype.map.call(
         form.querySelectorAll('[selected]'),
         function (el) { return el.value }
@@ -118,13 +118,13 @@ describe('deserializing an object into a form', () => {
       let result
 
       beforeEach(() => {
-        let form = makeForm()
-        deserialize(form, {chk: true})
+        const form = makeForm()
+        deserialize(form, { chk: true })
         result = form.querySelector('[name=chk]').checked
       })
 
       it('should check the checkbox', () => {
-        expect(result).to.be.true
+        expect(result).to.equal(true)
       })
     })
 
@@ -132,14 +132,14 @@ describe('deserializing an object into a form', () => {
       let result
 
       beforeEach(() => {
-        let form = makeForm()
+        const form = makeForm()
         form.querySelector('[name=chk]').checked = true
-        deserialize(form, {chk: false})
+        deserialize(form, { chk: false })
         result = form.querySelector('[name=chk]').checked
       })
 
       it('should uncheck the checkbox', () => {
-        expect(result).to.be.false
+        expect(result).to.equal(false)
       })
     })
   })
@@ -155,13 +155,13 @@ describe('deserializing an object into a form', () => {
         '<input type="checkbox" name="foo[bar][]" value="biz">' +
         '</form>'
       )
-      deserialize(form, {foo: {bar: ['baz', 'biz']}})
+      deserialize(form, { foo: { bar: ['baz', 'biz'] } })
     })
 
     it('should return result as array', () => {
-      expect(form.querySelector('[value=baz]').checked).to.be.true
-      expect(form.querySelector('[value=qux]').checked).to.be.false
-      expect(form.querySelector('[value=biz]').checked).to.be.true
+      expect(form.querySelector('[value=baz]').checked).to.equal(true)
+      expect(form.querySelector('[value=qux]').checked).to.equal(false)
+      expect(form.querySelector('[value=biz]').checked).to.equal(true)
     })
   })
 
@@ -169,13 +169,13 @@ describe('deserializing an object into a form', () => {
     let result, value
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<button name="btn">foo</button>' +
         '</form>'
       )
       value = form.querySelector('[name=btn]').value
-      deserialize(form, {btn: 'foo'})
+      deserialize(form, { btn: 'foo' })
       result = form.querySelector('[name=btn]').value
     })
 
@@ -188,13 +188,13 @@ describe('deserializing an object into a form', () => {
     let value, result
 
     beforeEach(function () {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="submit" name="btn" text="Foo">' +
         '</form>'
       )
       value = form.querySelector('[name=btn]').value
-      deserialize(form, {btn: 'foo'})
+      deserialize(form, { btn: 'foo' })
       result = form.querySelector('[name=btn]').value
     })
 
@@ -207,13 +207,13 @@ describe('deserializing an object into a form', () => {
     let value, result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="reset" name="btn" text="Foo">' +
         '</form>'
       )
       value = form.querySelector('[name=btn]').value
-      deserialize(form, {btn: 'foo'})
+      deserialize(form, { btn: 'foo' })
       result = form.querySelector('[name=btn]').value
     })
 
@@ -226,19 +226,19 @@ describe('deserializing an object into a form', () => {
     let checked
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="radio" name="foo" value="foo">' +
         '<input type="radio" name="foo" value="bar">' +
         '<input type="radio" name="foo" value="baz">' +
         '</form>'
       )
-      deserialize(form, {foo: 'bar'})
+      deserialize(form, { foo: 'bar' })
       checked = form.querySelector('input[name=foo][value=bar]').checked
     })
 
     it('should select the corresponding radio button', () => {
-      expect(checked).to.be.true
+      expect(checked).to.equal(true)
     })
   })
 
@@ -246,19 +246,19 @@ describe('deserializing an object into a form', () => {
     let checked
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="radio" name="foo" value="1"/>' +
         '<input id="value-2" type="radio" name="foo" value="2"/>' +
         '<input type="radio" name="foo" value="3"/>' +
         '</form>'
       )
-      deserialize(form, {foo: 2})
+      deserialize(form, { foo: 2 })
       checked = form.querySelector('#value-2').checked
     })
 
     it('should select the corresponding radio button', () => {
-      expect(checked).to.be.true
+      expect(checked).to.equal(true)
     })
   })
 
@@ -266,12 +266,12 @@ describe('deserializing an object into a form', () => {
     let result
 
     beforeEach(() => {
-      let div = domify(
+      const div = domify(
         '<div>' +
         '<input type="text" name="foo">' +
         '</div>'
       )
-      deserialize(div, {foo: 'bar'})
+      deserialize(div, { foo: 'bar' })
       result = div.querySelector('input').value
     })
 
@@ -294,12 +294,12 @@ describe('deserializing an object into a form', () => {
         '</form>' +
         '</div>'
       )
-      deserialize(div, {foo: 'bar', bar: 'foo'})
+      deserialize(div, { foo: 'bar', bar: 'foo' })
     })
 
     it('should set the input\'s value', () => {
-      let foo = div.querySelector('input[name=foo]').value
-      let bar = div.querySelector('input[name=bar]').value
+      const foo = div.querySelector('input[name=foo]').value
+      const bar = div.querySelector('input[name=bar]').value
       expect(foo).to.equal('bar')
       expect(bar).to.equal('foo')
     })
@@ -309,7 +309,7 @@ describe('deserializing an object into a form', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="text" name="foo" value="bar">' +
         '<input type="text" name="dontDeserialize" class="doNotSerializeMe" value="myOriginalValue">' +
@@ -318,8 +318,8 @@ describe('deserializing an object into a form', () => {
       // ignore all .doNotSerializeMe elements
       deserialize(
         form,
-        {foo: 'foo', dontDeserialize: 'iShouldNotBeSet'},
-        {ignoredTypes: ['.doNotSerializeMe']}
+        { foo: 'foo', dontDeserialize: 'iShouldNotBeSet' },
+        { ignoredTypes: ['.doNotSerializeMe'] }
       )
       result = form.querySelector('input[name=dontDeserialize]').value
     })

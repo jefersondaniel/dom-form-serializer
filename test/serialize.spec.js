@@ -1,6 +1,6 @@
 /* global beforeEach, describe, it */
-import 'jsdom-global/register'
-import {expect} from 'chai'
+import 'global-jsdom/register'
+import { expect } from 'chai'
 import serialize from '../lib/serialize'
 import domify from 'domify'
 
@@ -9,7 +9,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="text" name="foo" value="bar">' +
         '</form>'
@@ -30,7 +30,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="text" value="bar">' +
         '</form>'
@@ -39,7 +39,7 @@ describe('serialize', () => {
     })
 
     it('should not serialize the value to the target object', () => {
-      expect(result).to.be.ok
+      expect(result).to.not.equal(undefined)
     })
   })
 
@@ -47,7 +47,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<textarea name="foo">bar</textarea>' +
         '</form>'
@@ -64,7 +64,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<select name="foo">' +
         '<option value="bar">bar</option>' +
@@ -83,7 +83,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<select name="foo" multiple>' +
         '<option value="foo">foo</option>' +
@@ -119,7 +119,7 @@ describe('serialize', () => {
       })
 
       it('should return an object with a value of true', () => {
-        expect(result.chk).to.be.true
+        expect(result.chk).to.equal(true)
       })
     })
 
@@ -131,7 +131,7 @@ describe('serialize', () => {
       })
 
       it('should return an object with a value of false', () => {
-        expect(result.chk).to.be.false
+        expect(result.chk).to.equal(false)
       })
     })
   })
@@ -140,7 +140,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<button name="btn" value="foo">foo</button>' +
         '</form>'
@@ -149,7 +149,7 @@ describe('serialize', () => {
     })
 
     it('should return an object with a value of false', () => {
-      expect(result.hasOwnProperty('btn')).to.be.false
+      expect(Object.prototype.hasOwnProperty.call(result, 'btn')).to.equal(false)
     })
   })
 
@@ -157,7 +157,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="submit" name="btn" value="foo" text="Foo">' +
         '</form>'
@@ -166,7 +166,7 @@ describe('serialize', () => {
     })
 
     it('should not have the button\'s value', () => {
-      expect(result.hasOwnProperty('btn')).to.be.false
+      expect(Object.prototype.hasOwnProperty.call(result, 'btn')).to.equal(false)
     })
   })
 
@@ -174,7 +174,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="radio" name="foo" value="foo">' +
         '<input type="radio" name="foo" value="bar" checked>' +
@@ -193,7 +193,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="checkbox" name="foo[bar][]" value="baz" checked="checked">' +
         '<input type="checkbox" name="foo[bar][]" value="biz">' +
@@ -212,7 +212,7 @@ describe('serialize', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input name="a">' +
         '<input name="b" class="doNotSerializeMe">' +
@@ -221,11 +221,11 @@ describe('serialize', () => {
         '<button name="e">' +
         '</form>'
       )
-      result = serialize(form, {ignoredTypes: ['.doNotSerializeMe']})
+      result = serialize(form, { ignoredTypes: ['.doNotSerializeMe'] })
     })
 
     it('should not include fields excluded by selector', () => {
-      expect(result).to.eql({a: '', c: ''})
+      expect(result).to.eql({ a: '', c: '' })
     })
   })
 })

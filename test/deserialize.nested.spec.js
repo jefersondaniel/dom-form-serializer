@@ -1,6 +1,6 @@
 /* global beforeEach, describe, it */
-import 'jsdom-global/register'
-import {expect} from 'chai'
+import 'global-jsdom/register'
+import { expect } from 'chai'
 import deserialize from '../lib/deserialize'
 import domify from 'domify'
 
@@ -45,13 +45,13 @@ describe('deserializing nested key names', () => {
   })
 
   describe('when the view has nested naming with [] and ends with [] for an array, on checkboxes', () => {
-    let chk
+    let form
 
     beforeEach(() => {
-      let form = domify(
+      form = domify(
         '<form>' +
         '<input id="baz" type="checkbox" name="foo[bar][]" value="baz">' +
-        '<input type="checkbox" name="foo[bar][]" value="qux">' +
+        '<input id="qux" type="checkbox" name="foo[bar][]" value="qux">' +
         '</form>'
       )
 
@@ -64,7 +64,7 @@ describe('deserializing nested key names', () => {
         },
         {
           inputWriters: {
-            'checkbox': (el, value) => {
+            checkbox: (el, value) => {
               if (value.indexOf(el.value) !== -1) {
                 el.checked = true
               }
@@ -72,16 +72,14 @@ describe('deserializing nested key names', () => {
           }
         }
       )
-
-      chk = form.querySelector('#baz')
     })
 
     it('should select the first checkbox', () => {
-      expect(chk).to.be.checked
+      expect(form.querySelector('#baz').checked).to.equal(true)
     })
 
     it('should select the second checkbox', () => {
-      expect(chk).to.be.checked
+      expect(form.querySelector('#qux').checked).to.equal(true)
     })
   })
 
