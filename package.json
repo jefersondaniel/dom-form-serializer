@@ -4,11 +4,13 @@
   "description": "Serialize form inputs",
   "main": "dist/dom-form-serializer.js",
   "module": "dist/dom-form-serializer.mjs",
-  "jsnext:main": "dist/dom-form-serializer.mjs",
   "files": [
     "lib",
     "dist"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "lint": "standard",
     "prebuild": "npm run lint",

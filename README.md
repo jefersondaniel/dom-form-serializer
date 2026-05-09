@@ -1,6 +1,6 @@
 # DOM Form Serializer
 
-[![Build Status](https://secure.travis-ci.org/jefersondaniel/dom-form-serializer.png?branch=master)](http://travis-ci.org/jefersondaniel/dom-form-serializer)
+[![CI](https://github.com/jefersondaniel/dom-form-serializer/actions/workflows/ci.yml/badge.svg)](https://github.com/jefersondaniel/dom-form-serializer/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/dom-form-serializer.svg)](https://www.npmjs.com/package/dom-form-serializer)
 [![npm](https://img.shields.io/npm/dm/dom-form-serializer.svg)](https://www.npmjs.com/package/dom-form-serializer)
 
