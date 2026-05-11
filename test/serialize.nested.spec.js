@@ -1,6 +1,6 @@
 /* global beforeEach, describe, it */
-import 'jsdom-global/register'
-import {expect} from 'chai'
+import 'global-jsdom/register'
+import { expect } from 'chai'
 import serialize from '../lib/serialize'
 import domify from 'domify'
 
@@ -9,7 +9,7 @@ describe('serializing nested key names', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="text" name="widget" value="wombat">' +
         '<input type="text" name="foo[bar]" value="baz">' +
@@ -20,7 +20,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a property defined', () => {
-      expect(result.widget).to.exist
+      expect(result.widget).to.not.equal(undefined)
     })
 
     it('retrieves the value for the property', () => {
@@ -28,7 +28,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a nested property defined', () => {
-      expect(result.foo.bar).to.exist
+      expect(result.foo.bar).to.not.equal(undefined)
     })
 
     it('retrieves the value for the nested property', () => {
@@ -36,7 +36,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a nested, sibling property defined', () => {
-      expect(result.foo.baz.quux).to.exist
+      expect(result.foo.baz.quux).to.not.equal(undefined)
     })
 
     it('retrieves the value for the nested, sibling property', () => {
@@ -48,7 +48,7 @@ describe('serializing nested key names', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="checkbox" name="foo[bar][]" value="baz" checked="checked">' +
         '<input type="checkbox" name="foo[bar][]" value="qux" checked="checked">' +
@@ -66,7 +66,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a nested property defined', () => {
-      expect(result.foo.bar).to.exist
+      expect(result.foo.bar).to.not.equal(undefined)
     })
 
     it('should have the first value', () => {
@@ -82,7 +82,7 @@ describe('serializing nested key names', () => {
     let result
 
     beforeEach(() => {
-      let form = domify(
+      const form = domify(
         '<form>' +
         '<input type="text" name="widget" value="wombat">' +
         '<input type="text" name="foo.bar" value="baz">' +
@@ -99,7 +99,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a property defined', () => {
-      expect(result.widget).to.exist
+      expect(result.widget).to.not.equal(undefined)
     })
 
     it('retrieves the value for the property', () => {
@@ -107,7 +107,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a nested property defined', () => {
-      expect(result.foo.bar).to.exist
+      expect(result.foo.bar).to.not.equal(undefined)
     })
 
     it('retrieves the value for the nested property', () => {
@@ -115,7 +115,7 @@ describe('serializing nested key names', () => {
     })
 
     it('has a nested, sibling property defined', () => {
-      expect(result.foo.baz.quux).to.exist
+      expect(result.foo.baz.quux).to.not.equal(undefined)
     })
 
     it('retrieves the value for the nested, sibling property', () => {
