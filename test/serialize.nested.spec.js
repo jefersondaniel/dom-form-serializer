@@ -122,4 +122,38 @@ describe('serializing nested key names', () => {
       expect(result.foo.baz.quux).to.equal('qux')
     })
   })
+
+  describe('when an input name targets prototype-pollution sinks', () => {
+    it('does not pollute Object.prototype via __proto__', () => {
+      let form = domify(
+        '<form>' +
+        '<input type="text" name="__proto__[polluted]" value="yes">' +
+        '</form>'
+      )
+      let result = serialize(form)
+      expect({}.polluted).to.equal(undefined)
+      expect(result.polluted).to.equal(undefined)
+    })
+
+    it('does not pollute Object.prototype via constructor.prototype', () => {
+      let form = domify(
+        '<form>' +
+        '<input type="text" name="constructor[prototype][polluted]" value="yes">' +
+        '</form>'
+      )
+      let result = serialize(form)
+      expect({}.polluted).to.equal(undefined)
+      expect(result.polluted).to.equal(undefined)
+    })
+
+    it('does not pollute via a nested __proto__ segment', () => {
+      let form = domify(
+        '<form>' +
+        '<input type="text" name="foo[__proto__][polluted]" value="yes">' +
+        '</form>'
+      )
+      serialize(form)
+      expect({}.polluted).to.equal(undefined)
+    })
+  })
 })
